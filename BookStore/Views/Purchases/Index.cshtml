@@ -29,7 +29,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in ViewBag.Result)
+        @foreach (var item in (IEnumerable<PurchaseWithBookName>)ViewBag.Data)
         {
             <tr>
                 <td>

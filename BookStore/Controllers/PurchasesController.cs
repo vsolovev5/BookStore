@@ -21,13 +21,20 @@ namespace BookStore.Controllers
         // GET: Purchases
         public async Task<IActionResult> Index()
         {
-            var purchases = await _context.Purchases.ToListAsync();
-            var books = await _context.Books.ToListAsync();
-            var result= purchases.Join(books, 
-                p => p.BookId, 
-                b => b.Id, 
-             (p, b) => new { PurchaseId=p.PurchaseId, Person = p.Person, Address = p.Address, Name = b.Name, Author=b.Author, Price=b.Price , Date = p.Date});
-            ViewBag.Result = result.ToList();
+            var purchases = await _context.Purchases.ToListAsync(); // Список заказов
+            var books = await _context.Books.ToListAsync(); // Список книг в магазине
+            var result = (from p in purchases               
+                        join b in books on p.BookId equals b.Id  // Id книги равен Id 
+                        select new PurchaseWithBookName { 
+                            PurchaseId = p.PurchaseId, 
+                            Person = p.Person, 
+                            Address = p.Address, 
+                            Name = b.Name, 
+                            Author = b.Author, 
+                            Price = b.Price, 
+                            Date = p.Date });
+
+            ViewBag.Data = result;
             return View();
         }
 
