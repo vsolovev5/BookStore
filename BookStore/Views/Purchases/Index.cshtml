@@ -1,0 +1,61 @@
+﻿
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Список заказов</h1>
+
+<p>
+    <a asp-action="Create">Создать заказ</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Заказчик
+            </th>
+            <th>
+                Адрес доставки
+            </th>
+
+            <th>Название книги</th>
+            <th>Автор книги</th>
+            <th>Стоимость</th>
+
+            <th>
+                Дата заказа
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.Result)
+        {
+            <tr>
+                <td>
+                    @item.Person
+                </td>
+                <td>
+                    @item.Address
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Author
+                </td>
+                <td>
+                    @item.Price
+                </td>
+                <td>
+                    @item.Date
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.PurchaseId">Редактировать</a> |
+                    <a asp-action="Details" asp-route-id="@item.PurchaseId">Подробнее</a> |
+                    <a asp-action="Delete" asp-route-id="@item.PurchaseId">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
